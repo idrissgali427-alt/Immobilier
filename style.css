@@ -1,0 +1,1012 @@
+/* --- Variables CSS pour une personnalisation facile --- */
+:root {
+    --primary-color: #2c3e50; /* Bleu foncé pour les éléments principaux (en-tête, titres, texte important) */
+    --secondary-color: #3498db; /* Bleu vif pour les accents, liens, boutons d'action secondaires */
+    --accent-color: #e74c3c; /* Rouge pour les actions importantes ou alertes (bouton supprimer) */
+    --text-color: #333; /* Couleur de texte générale */
+    --light-bg-color: #f4f7f6; /* Arrière-plan général très léger */
+    --white-color: #ffffff; /* Couleur blanche pour les fonds de cartes, formulaires */
+    --border-color: #ddd; /* Couleur des bordures discrètes */
+    --shadow-color: rgba(0, 0, 0, 0.08); /* Ombre légère pour la profondeur */
+    --hover-color: #2980b9; /* Bleu plus foncé pour les survols (liens, boutons) */
+    --success-color: #27ae60; /* Vert pour les succès et actions positives (bouton imprimer) */
+    --warning-color: #f39c12; /* Jaune pour les avertissements ou édition */
+
+    /* Typographie */
+    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-headings: 'Montserrat', sans-serif; /* Supposons que vous ayez Montserrat via Google Fonts */
+}
+
+/* --- Styles Généraux et Réinitialisation --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-bg-color);
+    display: flex; /* Utilise flexbox pour la disposition principale */
+    flex-direction: column;
+    min-height: 100vh; /* S'assure que le body prend au moins toute la hauteur de la fenêtre */
+    overflow-x: hidden; /* Empêche le défilement horizontal non désiré */
+}
+
+a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    transition: color 0.3s ease; /* Transition douce pour les liens */
+}
+
+a:hover {
+    color: var(--hover-color);
+    text-decoration: underline;
+}
+
+ul {
+    list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings); /* Applique la police des titres */
+    font-weight: 700; /* Gras pour les titres */
+    color: var(--primary-color);
+}
+
+button, input[type="submit"] {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 12px 25px; /* Augmente le padding des boutons */
+    border: none;
+    border-radius: 8px; /* Bords plus arrondis pour un look moderne */
+    cursor: pointer;
+    font-size: 1em; /* Taille de police par défaut */
+    font-weight: 600; /* Texte des boutons plus gras */
+    transition: background-color 0.3s ease, transform 0.1s ease; /* Transitions douces */
+    letter-spacing: 0.5px; /* Espacement léger entre les lettres */
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: var(--hover-color);
+    transform: translateY(-2px); /* Léger effet de soulèvement au survol */
+    box-shadow: 0 4px 8px var(--shadow-color); /* Ombre au survol */
+}
+
+button:active {
+    transform: translateY(0); /* Annule l'effet de soulèvement au clic */
+    box-shadow: none;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+    transform: none;
+    box-shadow: none;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="tel"],
+input[type="file"],
+input[type="email"],
+input[type="month"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px; /* Padding généreux pour les champs de formulaire */
+    border: 1px solid var(--border-color);
+    border-radius: 8px; /* Bords arrondis */
+    font-size: 1em;
+    color: var(--text-color);
+    background-color: var(--white-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+input[type="month"]:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); /* Ombre de focus subtile */
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* --- En-tête (Header) --- */
+header {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px var(--shadow-color); /* Ombre plus prononcée */
+    flex-wrap: wrap;
+    position: sticky; /* Rendre l'en-tête collant */
+    top: 0;
+    z-index: 1000; /* S'assurer qu'il reste au-dessus des autres éléments */
+}
+
+header h1 {
+    font-size: 2.5em; /* Plus grand pour le titre principal */
+    margin-bottom: 5px;
+    color: var(--white-color); /* Le titre doit être blanc sur le fond bleu foncé */
+}
+
+header p {
+    font-size: 0.9em;
+    opacity: 0.9; /* Légèrement transparent pour la date/heure */
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Plus d'espace entre le label et l'input */
+}
+
+.header-right label {
+    font-weight: 500;
+    white-space: nowrap; /* Empêche le texte de se briser */
+}
+
+.header-right input[type="text"] {
+    width: 180px; /* Largeur fixe pour l'input responsable */
+    background-color: rgba(255, 255, 255, 0.15); /* Fond légèrement transparent pour l'input */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Bordure plus claire */
+    color: var(--white-color);
+}
+
+.header-right input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.header-right input[type="text"]:focus {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-color: var(--white-color);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+/* --- Conteneur Principal (Container) --- */
+.container {
+    display: flex;
+    flex: 1;
+}
+
+/* --- Barre Latérale (Sidebar) --- */
+.sidebar {
+    width: 280px; /* Légèrement plus large pour plus d'espace */
+    background-color: var(--white-color);
+    padding: 25px 0; /* Plus de padding vertical */
+    box-shadow: 3px 0 10px var(--shadow-color); /* Ombre plus prononcée sur le côté */
+    overflow-y: auto;
+    flex-shrink: 0; /* Empêche le rétrécissement de la sidebar */
+}
+
+.sidebar nav ul {
+    padding: 0;
+}
+
+.sidebar nav ul li {
+    margin-bottom: 8px; /* Plus d'espace entre les éléments de menu */
+}
+
+.sidebar nav ul li a {
+    display: flex; /* Utilise flexbox pour aligner icône et texte */
+    align-items: center;
+    padding: 14px 25px; /* Padding généreux pour les liens de navigation */
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 1.05em;
+    transition: background-color 0.3s ease, color 0.3s ease, border-left 0.3s ease;
+    border-left: 5px solid transparent; /* Bordure transparente par défaut */
+}
+
+.sidebar nav ul li a i {
+    margin-right: 15px; /* Espacement entre l'icône et le texte */
+    font-size: 1.2em; /* Taille légèrement plus grande pour les icônes */
+    color: var(--secondary-color); /* Couleur des icônes par défaut */
+    transition: color 0.3s ease;
+}
+
+.sidebar nav ul li a:hover,
+.sidebar nav ul li a.active {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border-left: 5px solid var(--accent-color); /* Bordure accentuée sur l'élément actif/survolé */
+}
+
+.sidebar nav ul li a:hover i,
+.sidebar nav ul li a.active i {
+    color: var(--white-color); /* Icônes blanches sur fond bleu */
+}
+
+/* --- Contenu Principal (Main Content) --- */
+.main-content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    background-color: var(--light-bg-color);
+}
+
+.main-content section {
+    background-color: var(--white-color);
+    padding: 35px; /* Plus de padding pour les sections */
+    border-radius: 10px; /* Bords plus arrondis */
+    box-shadow: 0 6px 15px var(--shadow-color); /* Ombre plus douce et plus présente */
+    margin-bottom: 35px; /* Plus d'espace entre les sections */
+}
+
+.main-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 30px; /* Plus d'espace en dessous du titre */
+    font-size: 2.2em; /* Plus grand pour les titres de section */
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 18px; /* Plus de padding sous la ligne */
+}
+
+/* --- Masquer les sections cachées --- */
+.hidden {
+    display: none;
+}
+
+/* --- Dashboard --- */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px; /* Plus d'espace entre les cartes du dashboard */
+    margin-bottom: 40px;
+}
+
+.dashboard-card {
+    background-color: var(--white-color);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-top: 5px solid; /* Bordure supérieure pour différenciation */
+}
+
+.dashboard-card:hover {
+    transform: translateY(-8px); /* Effet de soulèvement plus prononcé */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Ombre plus forte au survol */
+}
+
+.dashboard-card h3 {
+    color: var(--text-color); /* Couleur du texte général pour le titre */
+    font-size: 1.4em;
+    margin-bottom: 12px;
+}
+
+.dashboard-card p {
+    font-size: 2.8em; /* Chiffres clés très grands */
+    font-weight: bold;
+    color: var(--primary-color); /* Couleur principale pour les chiffres */
+}
+
+/* Couleurs spécifiques pour les bordures de cartes dashboard */
+.dashboard-card:nth-child(1) { border-top-color: var(--primary-color); } /* Total Propriétés */
+.dashboard-card:nth-child(2) { border-top-color: var(--success-color); } /* Propriétés Occupées */
+.dashboard-card:nth-child(3) { border-top-color: var(--secondary-color); } /* Propriétés Libres */
+.dashboard-card:nth-child(4) { border-top-color: var(--warning-color); } /* Loyer Attendu */
+.dashboard-card:nth-child(5) { border-top-color: #17a2b8; } /* Paiements Reçus (un bleu-vert différent) */
+.dashboard-card:nth-child(6) { border-top-color: var(--accent-color); } /* Maisons Impayées */
+
+
+/* Charts Container */
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); /* Largeur minimale ajustée */
+    gap: 30px;
+    margin-top: 35px;
+}
+
+.chart-card {
+    background-color: var(--white-color);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.6em;
+    text-align: center;
+}
+
+.chart-card canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+/* --- Formulaires --- */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacement entre les groupes de formulaire */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 10px; /* Plus d'espace sous le label */
+    font-weight: 600; /* Labels plus gras */
+    color: var(--primary-color);
+}
+
+input[readonly] {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    opacity: 0.9;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Effet d'ombre interne pour les champs readonly */
+}
+
+/* Styles pour les boutons dans les formulaires */
+form button {
+    align-self: flex-start; /* Aligne le bouton de soumission à gauche */
+    margin-top: 20px;
+}
+
+/* --- Tableaux --- */
+.table-container {
+    margin-top: 35px;
+    background-color: var(--white-color);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px var(--shadow-color);
+    overflow-x: auto;
+}
+
+.table-container h3 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color); /* Ligne sous le titre du tableau */
+    padding-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table thead {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+table th,
+table td {
+    padding: 15px 20px; /* Padding généreux pour les cellules */
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+table th {
+    font-weight: 600; /* Texte des en-têtes plus gras */
+    text-transform: uppercase;
+    font-size: 0.95em;
+    letter-spacing: 0.5px; /* Espacement léger des lettres */
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9fbfb; /* Légèrement plus clair pour les lignes paires */
+}
+
+table tbody tr:hover {
+    background-color: #eef4f7; /* Couleur de survol plus douce */
+}
+
+/* Boutons d'action dans les tableaux */
+.action-buttons button {
+    margin-right: 8px; /* Plus d'espace entre les boutons d'action */
+    padding: 9px 14px;
+    font-size: 0.9em;
+    border-radius: 5px; /* Bords légèrement arrondis */
+    font-weight: 500;
+}
+
+.action-buttons .btn-edit {
+    background-color: var(--warning-color); /* Jaune pour l'édition */
+}
+
+.action-buttons .btn-edit:hover {
+    background-color: #d1870f;
+}
+
+.action-buttons .btn-delete {
+    background-color: var(--accent-color); /* Rouge pour la suppression */
+}
+
+.action-buttons .btn-delete:hover {
+    background-color: #c0392b;
+}
+
+/* Boutons d'impression */
+.btn-print {
+    background-color: var(--success-color);
+    margin-left: auto; /* Aligne à droite dans le flexbox avec h3 */
+    padding: 10px 20px;
+    font-size: 0.95em;
+}
+
+.btn-print:hover {
+    background-color: #229a53;
+}
+
+/* Photo de locataire dans les tableaux */
+.locataire-photo {
+    width: 60px; /* Plus grande */
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--secondary-color); /* Bordure plus prononcée */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* --- Section Avis de Paiement Spécifique --- */
+#avisPaiement .form-group {
+    flex-direction: row; /* Alignement horizontal pour les éléments de formulaire de date */
+    align-items: center;
+    gap: 15px;
+}
+
+#avisPaiement .form-group label {
+    margin-bottom: 0;
+    flex-shrink: 0; /* Empêche le label de rétrécir */
+}
+
+#avisPaiement .form-group input {
+    max-width: 200px; /* Largeur limitée pour le champ date */
+}
+
+#avisPaiement .form-group button {
+    margin-top: 0; /* Annule la marge supérieure */
+    align-self: center; /* Centre verticalement */
+}
+
+#avisPaiement form {
+    align-items: flex-start;
+}
+
+/* --- Bilan Financier --- */
+.bilan-controls {
+    display: flex;
+    gap: 15px; /* Plus d'espace entre les boutons */
+    margin-bottom: 25px;
+    flex-wrap: wrap; /* Pour la réactivité */
+}
+
+.bilan-controls button {
+    padding: 12px 20px;
+    background-color: var(--white-color); /* Fond blanc pour les boutons inactifs */
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    font-weight: 600;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    transition: all 0.3s ease;
+}
+
+.bilan-controls button:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.bilan-controls button.active {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    border-color: var(--secondary-color);
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3); /* Ombre colorée pour l'actif */
+    transform: translateY(-2px);
+}
+
+.bilan-controls button.active:hover {
+    background-color: var(--hover-color);
+}
+
+.bilan-date-inputs {
+    display: flex;
+    flex-wrap: wrap; /* Pour la réactivité */
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 35px;
+    padding: 20px;
+    background-color: var(--light-bg-color);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.bilan-date-inputs label {
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 0; /* Supprime la marge de label dans ce contexte */
+}
+
+.bilan-date-inputs input[type="number"],
+.bilan-date-inputs input[type="month"],
+.bilan-date-inputs input[type="date"] {
+    width: auto; /* Largeur automatique */
+    max-width: 150px; /* Limite la largeur */
+    flex-grow: 1; /* Permet aux inputs de s'étendre si l'espace est disponible */
+}
+
+.bilan-date-inputs button {
+    margin-top: 0;
+    align-self: center;
+    background-color: var(--primary-color); /* Bouton générer avec la couleur primaire */
+}
+
+.bilan-date-inputs button:hover {
+    background-color: #243443;
+}
+
+
+.bilan-resultats-container {
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    padding: 30px;
+    border-radius: 10px;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.3em;
+    color: var(--text-color);
+    gap: 15px; /* Espacement entre les paragraphes */
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.05); /* Ombre interne subtile */
+}
+
+.bilan-resultats-container p {
+    margin: 0; /* Supprime les marges par défaut des paragraphes */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px dashed var(--border-color); /* Ligne pointillée entre les éléments */
+}
+
+.bilan-resultats-container p:last-child {
+    border-bottom: none; /* Pas de bordure pour le dernier élément */
+    padding-bottom: 0;
+}
+
+.bilan-resultats-container p span {
+    font-weight: bold;
+    color: var(--secondary-color);
+    font-size: 1.1em; /* Légèrement plus grand pour les montants */
+}
+
+.bilan-resultats-container #bilanBeneficeNet {
+    color: var(--success-color); /* Vert pour le bénéfice net */
+    font-size: 1.2em;
+}
+
+/* --- Styles de Réception et d'Avis Imprimables (Professionnels) --- */
+.recu-container, .avis-content-container {
+    background-color: var(--white-color);
+    border: 1px solid var(--border-color);
+    padding: 40px; /* Plus de padding */
+    margin-top: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12); /* Ombre plus distincte */
+    font-family: 'Times New Roman', serif;
+    font-size: 1.15em;
+    line-height: 1.8;
+    max-width: 800px; /* Largeur maximale définie */
+    margin-left: auto;
+    margin-right: auto; /* Centrer le bloc */
+}
+
+.recu-header, .avis-header {
+    text-align: center;
+    margin-bottom: 40px; /* Plus d'espace sous l'en-tête */
+    border-bottom: 3px solid var(--primary-color); /* Bordure plus épaisse */
+    padding-bottom: 20px;
+}
+
+.recu-header h2, .avis-header h2 {
+    color: var(--primary-color);
+    font-size: 2.8em; /* Titre du reçu/avis plus grand */
+    margin-bottom: 10px;
+}
+
+.recu-header p, .avis-header p {
+    font-size: 1.1em;
+    color: #555;
+    margin: 3px 0; /* Espacement plus serré entre les infos de l'entreprise */
+}
+
+.recu-details, .avis-details {
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    font-size: 1em; /* Taille par défaut */
+}
+
+.recu-details div, .avis-details div {
+    flex: 1 1 48%; /* Deux colonnes */
+    margin-bottom: 15px;
+}
+
+.recu-details strong, .avis-details strong {
+    color: var(--primary-color);
+    display: inline-block; /* Pour aligner avec la valeur */
+    width: 150px; /* Largeur fixe pour les labels strong */
+    font-weight: bold;
+}
+
+.recu-item-table, .avis-item-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+}
+
+.recu-item-table th, .avis-item-table th,
+.recu-item-table td, .avis-item-table td {
+    border: 1px solid #eee;
+    padding: 15px;
+    text-align: left;
+}
+
+.recu-item-table thead, .avis-item-table thead {
+    background-color: #f2f2f2;
+    color: var(--primary-color);
+}
+
+.recu-total, .avis-footer {
+    text-align: right;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.avis-footer p {
+    font-style: italic;
+    font-size: 0.9em;
+    color: #777;
+    text-align: center;
+    margin-top: 35px;
+}
+
+.signature-section {
+    margin-top: 60px;
+    padding-top: 25px;
+    border-top: 1px dashed #ccc;
+    text-align: right;
+}
+
+.signature-section p {
+    margin: 0;
+    font-size: 1.05em;
+    color: #555;
+}
+
+
+/* --- Médias Queries pour la Réactivité --- */
+@media (max-width: 992px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        box-shadow: 0 3px 8px var(--shadow-color);
+        order: -1; /* Place la sidebar en haut */
+        padding: 15px 0;
+    }
+
+    .sidebar nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px; /* Réduit l'espace entre les liens */
+    }
+
+    .sidebar nav ul li {
+        margin-bottom: 0;
+    }
+
+    .sidebar nav ul li a {
+        padding: 10px 15px;
+        font-size: 0.95em;
+        border-left: none; /* Supprime la bordure gauche */
+        border-bottom: 3px solid transparent; /* Utilise une bordure basse pour l'actif */
+        flex-direction: column; /* Icône au-dessus du texte */
+        text-align: center;
+    }
+
+    .sidebar nav ul li a i {
+        margin-right: 0; /* Supprime la marge droite de l'icône */
+        margin-bottom: 5px; /* Marge sous l'icône */
+        font-size: 1.1em;
+    }
+
+    .sidebar nav ul li a:hover,
+    .sidebar nav ul li a.active {
+        border-bottom-color: var(--accent-color); /* Active la bordure basse */
+        border-left: none;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+
+    .header-right {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .header-right input[type="text"] {
+        width: calc(100% - 80px); /* Ajuste la largeur */
+        max-width: 250px; /* Limite la largeur */
+    }
+
+    .dashboard-grid, .charts-container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Ajuste les cartes et graphiques */
+        gap: 20px;
+    }
+
+    .recu-details div, .avis-details div {
+        flex: 1 1 100%; /* Une seule colonne sur les petits écrans */
+    }
+
+    .recu-details strong, .avis-details strong {
+        width: auto; /* Largeur automatique */
+        display: block; /* Prend toute la ligne pour le label */
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2em;
+    }
+
+    .main-content section {
+        padding: 25px;
+        margin-bottom: 25px;
+    }
+
+    .main-content h2 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+    }
+
+    form button {
+        padding: 10px 20px;
+        font-size: 0.95em;
+    }
+
+    .table-container {
+        padding: 20px;
+    }
+
+    table th,
+    table td {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+
+    .action-buttons button {
+        padding: 7px 10px;
+        font-size: 0.85em;
+    }
+
+    .recu-container, .avis-content-container {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.6em;
+    }
+
+    header p {
+        font-size: 0.8em;
+    }
+
+    .sidebar nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .sidebar nav ul li a {
+        width: 90%;
+        text-align: center;
+        flex-direction: row; /* Reviens en ligne pour les très petits écrans si le texte est court */
+        justify-content: center;
+    }
+
+    .sidebar nav ul li a i {
+        margin-right: 10px;
+        margin-bottom: 0;
+    }
+
+    .dashboard-grid, .charts-container {
+        grid-template-columns: 1fr; /* Une seule colonne pour tout */
+        gap: 15px;
+    }
+
+    .dashboard-card, .chart-card {
+        padding: 20px;
+    }
+
+    .dashboard-card h3 {
+        font-size: 1.2em;
+    }
+
+    .dashboard-card p {
+        font-size: 2.2em;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    .btn-print {
+        padding: 8px 15px;
+        font-size: 0.8em;
+    }
+
+    .bilan-date-inputs {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .bilan-date-inputs input {
+        max-width: 100%;
+    }
+
+    .recu-container, .avis-content-container {
+        padding: 20px;
+        font-size: 1em;
+    }
+
+    .recu-header h2, .avis-header h2 {
+        font-size: 2em;
+    }
+}
+
+
+/* --- Styles spécifiques à l'impression --- */
+@media print {
+    body {
+        background-color: var(--white-color);
+        color: #000;
+        margin: 0;
+        padding: 0;
+        font-size: 12pt;
+    }
+
+    header, .sidebar, .btn-print, .hidden,
+    .main-content section:not(#recuPaiementContent):not(#avisDePaiementContent):not(#maisons-impayees-table),
+    form, .search-container, .dashboard-grid, .charts-container,
+    .bilan-controls, .bilan-date-inputs, .action-buttons {
+        display: none !important; /* Cache tout sauf le contenu à imprimer et le tableau des impayés si désiré */
+    }
+
+    .main-content {
+        flex: none;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Force l'affichage et la mise en page des éléments imprimables spécifiques */
+    #maisons-impayees-table,
+    .recu-container,
+    .avis-content-container {
+        display: block !important;
+        position: static !important; /* Important pour l'impression */
+        width: 100% !important;
+        max-width: none !important; /* Supprime la largeur maximale */
+        margin: 0 auto !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 15mm 20mm !important; /* Utilisation de mm pour un contrôle d'impression précis */
+        page-break-after: always; /* Force un saut de page après chaque section imprimable */
+    }
+
+    .recu-header, .avis-header {
+        border-bottom: 2px solid #000 !important;
+        padding-bottom: 15px !important;
+        margin-bottom: 30px !important;
+    }
+
+    .recu-header h2, .avis-header h2 {
+        font-size: 2.2em !important;
+        color: #000 !important;
+    }
+
+    .recu-header p, .avis-header p {
+        color: #333 !important;
+        font-size: 1em !important;
+    }
+
+    .recu-details div, .avis-details div {
+        flex: 1 1 48% !important; /* Maintient deux colonnes */
+        margin-bottom: 10px !important;
+    }
+
+    .recu-details strong, .avis-details strong {
+        color: #000 !important;
+    }
+
+    .recu-item-table, .avis-item-table {
+        border: 1px solid #000 !important;
+        margin-bottom: 30px !important;
+    }
+
+    .recu-item-table th, .avis-item-table th,
+    .recu-item-table td, .avis-item-table td {
+        border: 1px solid #ccc !important;
+        padding: 10px 15px !important;
+    }
+
+    .recu-item-table thead, .avis-item-table thead {
+        background-color: #e0e0e0 !important;
+        color: #000 !important;
+    }
+
+    .recu-total, .avis-footer {
+        color: #000 !important;
+        font-size: 1.3em !important;
+        border-top: 1px dashed #666 !important;
+    }
+
+    .avis-footer p {
+        color: #555 !important;
+    }
+
+    .signature-section {
+        border-top: 1px solid #000 !important;
+        margin-top: 40px !important;
+    }
+}

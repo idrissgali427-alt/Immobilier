@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GaliBusiness Immobilier</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>GaliBusiness Immobilier</h1>
+            <p>Date: <span id="currentDate"></span> | Heure: <span id="currentTime"></span></p>
+        </div>
+        <div class="header-right">
+            <label for="responsableInput">Responsable:</label>
+            <input type="text" id="responsableInput" placeholder="Nom du responsable">
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#" data-section="dashboard">Dashboard</a></li>
+                    <li><a href="#" data-section="nouvelleMaison">Nouvelle Maison</a></li>
+                    <li><a href="#" data-section="maisonsLibres">Maisons Libres</a></li>
+                    <li><a href="#" data-section="nouvelLocataire">Nouveau Locataire</a></li>
+                    <li><a href="#" data-section="paiements">Paiements</a></li>
+                    <li><a href="#" data-section="maisonsImpayees">Maisons Impayées</a></li>
+                    <li><a href="#" data-section="avisPaiement">Avis de Paiement</a></li>
+                    <li><a href="#" data-section="finContrat">Fin de Contrat</a></li>
+                    <li><a href="#" data-section="bilan">Bilan Global</a></li>
+                    <li><a href="#" data-section="diagrammesGeneraux">Diagrammes Généraux</a></li>
+                    <li><a href="#" data-section="performanceFinanciere">Performance Financière</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <section id="dashboard" class="dashboard-section">
+                <h2>Dashboard</h2>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Maisons Enregistrées</h3>
+                        <p id="totalMaisons">0</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Maisons Occupées</h3>
+                        <p id="maisonsOccupees">0</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Maisons Libres</h3>
+                        <p id="maisonsLibresCount">0</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Loyer Total Attendu (Mensuel)</h3>
+                        <p id="loyerAttenduTotal">0.00 €</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Paiements du Mois</h3>
+                        <p id="paiementsMois">0.00 €</p>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Maisons Impayées (Mois Courant)</h3>
+                        <p id="maisonsImpayeesCount">0</p>
+                    </div>
+                </div>
+
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <h3>Paiements Mensuels (Global)</h3>
+                        <canvas id="paiementsMensuelsChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Disponibilité des Maisons</h3>
+                        <canvas id="disponibiliteMaisonsChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Maisons par Quartier</h3>
+                        <canvas id="maisonsParQuartierChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="nouvelleMaison" class="hidden">
+                <h2>Enregistrer une Nouvelle Maison</h2>
+                <form id="formNouvelleMaison">
+                    <input type="hidden" id="nm_responsable" name="responsable">
+                    <div class="form-group">
+                        <label for="nm_codeMaison">Code Maison:</label>
+                        <input type="text" id="nm_codeMaison" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nm_prixLouer">Prix à Louer (€):</label>
+                        <input type="number" id="nm_prixLouer" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nm_quartier">Quartier:</label>
+                        <input type="text" id="nm_quartier" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nm_adresse">Adresse Complète:</label>
+                        <input type="text" id="nm_adresse" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nm_nombrePieces">Nombre de Pièces:</label>
+                        <input type="number" id="nm_nombrePieces" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nm_date">Date d'enregistrement:</label>
+                        <input type="date" id="nm_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nm_description">Description:</label>
+                        <textarea id="nm_description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="nm_disponibilite">Disponibilité:</label>
+                        <select id="nm_disponibilite" required>
+                            <option value="Libre">Libre</option>
+                            <option value="Occupé">Occupé</option>
+                        </select>
+                    </div>
+                    <button type="submit">Enregistrer Maison</button>
+                </form>
+
+                <div class="table-container" id="tableNouvelleMaison-container">
+                    <h3>Maisons Enregistrées Récemment</h3>
+                    <p>Cette table affiche les maisons ajoutées via ce formulaire.</p>
+                    <button class="btn-print" id="btnPrintNouvelleMaisonTable">Imprimer la Liste</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Rapport</th>
+                                <th>Code Maison</th>
+                                <th>Prix Loyer</th>
+                                <th>Quartier</th>
+                                <th>Adresse</th>
+                                <th>Nb Pièces</th>
+                                <th>Date Enreg.</th>
+                                <th>Description</th>
+                                <th>Disponibilité</th>
+                                <th>Responsable</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableNouvelleMaisonBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="maisonsLibres" class="hidden">
+                <h2>Maisons Libres</h2>
+                <div class="search-container">
+                    <input type="text" id="searchLibreMaison" placeholder="Rechercher par code, quartier, adresse...">
+                    <button id="btnRechercheLibreMaison">Rechercher</button>
+                </div>
+                <div class="table-container" id="maisons-libres-table">
+                    <h3>Maisons Actuellement Libres</h3>
+                    <button class="btn-print" id="btnPrintMaisonsLibres">Imprimer la Liste</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Rapport</th>
+                                <th>Code Maison</th>
+                                <th>Prix Loyer</th>
+                                <th>Quartier</th>
+                                <th>Nombre Pièces</th>
+                                <th>Date Enreg.</th>
+                                <th>Responsable</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableMaisonsLibresBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="nouvelLocataire" class="hidden">
+                <h2>Enregistrer un Nouveau Locataire</h2>
+                <form id="formNouvelLocataire">
+                    <input type="hidden" id="nl_responsable" name="responsable">
+                    <div class="form-group">
+                        <label for="nl_codeMaison">Maison à Louer:</label>
+                        <select id="nl_codeMaison" required>
+                            <option value="">-- Sélectionnez une maison --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="nl_nomPrenom">Nom & Prénom(s) Locataire:</label>
+                        <input type="text" id="nl_nomPrenom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nl_prixLouer">Loyer Mensuel (Auto-rempli):</label>
+                        <input type="number" id="nl_prixLouer" step="0.01" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="nl_adresse">Adresse Maison (Auto-rempli):</label>
+                        <input type="text" id="nl_adresse" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="nl_quartier">Quartier Maison (Auto-rempli):</label>
+                        <input type="text" id="nl_quartier" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="nl_telephone">Téléphone Locataire:</label>
+                        <input type="tel" id="nl_telephone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nl_quotient">Quotient Familial:</label>
+                        <input type="text" id="nl_quotient">
+                    </div>
+                    <div class="form-group">
+                        <label for="nl_photo">Photo du Locataire:</label>
+                        <input type="file" id="nl_photo" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="nl_date">Date Contrat:</label>
+                        <input type="date" id="nl_date" required>
+                    </div>
+                    <button type="submit">Enregistrer Locataire</button>
+                </form>
+
+                <div class="table-container" id="tableNouvelLocataire-container">
+                    <h3>Locataires Enregistrés Récemment</h3>
+                    <p>Cette table affiche les locataires ajoutés via ce formulaire.</p>
+                    <button class="btn-print" id="btnPrintNouvelLocataireTable">Imprimer la Liste</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Rapport</th>
+                                <th>Code Maison</th>
+                                <th>Nom Locataire</th>
+                                <th>Loyer</th>
+                                <th>Téléphone</th>
+                                <th>Quotient</th>
+                                <th>Photo</th>
+                                <th>Date Contrat</th>
+                                <th>Responsable</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableNouvelLocataireBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="paiements" class="hidden">
+                <h2>Enregistrer un Paiement</h2>
+                <form id="formPaiement">
+                    <input type="hidden" id="paie_responsable" name="responsable">
+                    <div class="form-group">
+                        <label for="paie_codeMaison">Code Maison:</label>
+                        <select id="paie_codeMaison" required>
+                            <option value="">-- Sélectionnez une maison --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="paie_nomPrenom">Nom Locataire (Auto-rempli):</label>
+                        <input type="text" id="paie_nomPrenom" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="paie_prixLouer">Montant du Loyer (Auto-rempli):</label>
+                        <input type="number" id="paie_prixLouer" step="0.01" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="paie_adresse">Adresse Maison (Auto-rempli):</label>
+                        <input type="text" id="paie_adresse" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="paie_quartier">Quartier Maison (Auto-rempli):</label>
+                        <input type="text" id="paie_quartier" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="paie_mois">Mois Payé:</label>
+                        <input type="month" id="paie_mois" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paie_date">Date de Paiement:</label>
+                        <input type="date" id="paie_date" required>
+                    </div>
+                    <button type="submit">Enregistrer Paiement</button>
+                </form>
+
+                <div class="recu-container hidden" id="recuPaiementContent">
+                    <div class="recu-header">
+                        <h3>Reçu de Paiement</h3>
+                        <p>Date: <span id="recuPaiementDate"></span></p>
+                        <p>Heure: <span id="recuPaiementTime"></span></p>
+                        <p>Responsable: <span id="recuPaiementResponsable"></span></p>
+                    </div>
+                    <div class="recu-body">
+                    </div>
+                </div>
+                <button class="btn-print hidden" id="btnPrintRecu">Imprimer Reçu</button>
+
+                <div class="table-container" id="tablePaiement-container">
+                    <h3>Paiements Enregistrés Récemment</h3>
+                    <p>Cette table affiche les paiements ajoutés via ce formulaire.</p>
+                    <button class="btn-print" id="btnPrintPaiementTable">Imprimer la Liste</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Paiement</th>
+                                <th>Code Maison</th>
+                                <th>Nom Locataire</th>
+                                <th>Montant</th>
+                                <th>Mois Payé</th>
+                                <th>Date Paiement</th>
+                                <th>Responsable</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablePaiementBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="maisonsImpayees" class="hidden">
+                <h2>Maisons Impayées (Mois Courant)</h2>
+                <div class="table-container" id="maisons-impayees-table">
+                    <h3>Liste des Maisons Non Payées Actuellement</h3>
+                    <button class="btn-print" id="btnPrintMaisonsImpayees">Imprimer la Liste</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Code Maison</th>
+                                <th>Nom Locataire</th>
+                                <th>Téléphone Locataire</th>
+                                <th>Loyer Attendu</th>
+                                <th>Mois Impayé</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableMaisonsImpayeesBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="avisPaiement" class="hidden">
+                <h2>Générer et Gérer les Avis de Paiement</h2>
+                <form id="formAvisPaiement">
+                    <input type="hidden" id="avis_responsable" name="responsable">
+                    <div class="form-group">
+                        <label for="avis_dateSelection">Date de Référence:</label>
+                        <input type="date" id="avis_dateSelection" required>
+                        <button type="button" id="btnChargerMaisonsImpayees">Charger Maisons Impayées</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="avis_codeMaison">Maison Impayée à Sélectionner:</label>
+                        <select id="avis_codeMaison" required disabled>
+                            <option value="">-- Sélectionnez une maison impayée --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="avis_moisAutomatique">Mois Impayé:</label>
+                        <input type="text" id="avis_moisAutomatique" readonly>
+                    </div>
+                    <button type="button" id="btnGenererAvis" disabled>Générer Avis de Paiement</button>
+                    <button type="button" id="btnEnregistrerImpaye" disabled>Enregistrer comme Impayé Actuel</button>
+                </form>
+
+                <div class="avis-content-container hidden" id="avisDePaiementContent">
+                    <div class="avis-header">
+                        <h3>Avis de Paiement</h3>
+                        <p>Date: <span id="avisPaiementDate"></span></p>
+                        <p>Heure: <span id="avisPaiementTime"></span></p>
+                        <p>Responsable: <span id="avisPaiementResponsable"></span></p>
+                    </div>
+                    <div class="avis-body">
+                    </div>
+                </div>
+                <button class="btn-print hidden" id="btnPrintAvis">Imprimer l'Avis</button>
+
+                <div class="table-container" id="tableAvisPaiement-container">
+                    <h3>Historique des Avis de Paiement Générés</h3>
+                    <p>Cette table affiche les avis générés via ce formulaire.</p>
+                    <button class="btn-print" id="btnPrintAvisPaiementTable">Imprimer la Liste</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID Avis</th>
+                                <th>Code Maison</th>
+                                <th>Nom Locataire</th>
+                                <th>Mois Impayé</th>
+                                <th>Date Génération</th>
+                                <th>Responsable</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableAvisPaiementBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="finContrat" class="hidden">
+                <h2>Gestion des Fins de Contrat</h2>
+                <div class="table-container" id="fin-contrat-table">
+                    <h3>Contrats Actuellement Actifs (à surveiller)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Code Maison</th>
+                                <th>Nom Locataire</th>
+                                <th>Date Début Contrat</th>
+                                <th>Date Fin Prévue</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableFinContratBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="bilan" class="hidden">
+                <h2>Bilan Global</h2>
+                <p>Sélectionnez le type de bilan à générer, puis les critères de date.</p>
+
+                <div class="bilan-buttons">
+                    <button id="bilanQuotientBtn" class="btn">Bilan par Quotient Familial</button>
+                    <button id="bilanMaisonsImpayeesBtn" class="btn">Bilan Maisons Impayées</button>
+                    <button id="bilanMaisonsPayeesBtn" class="btn">Bilan Maisons Payées</button>
+                </div>
+
+                <div class="form-group bilan-date-inputs">
+                    <label for="bilanDateMonth">Mois :</label>
+                    <select id="bilanDateMonth" class="form-control">
+                        <option value="">Tous les mois</option>
+                        <option value="2025-01">Janvier 2025</option>
+                        <option value="2025-02">Février 2025</option>
+                        <option value="2025-03">Mars 2025</option>
+                        <option value="2025-04">Avril 2025</option>
+                        <option value="2025-05">Mai 2025</option>
+                        <option value="2025-06">Juin 2025</option>
+                        <option value="2025-07">Juillet 2025</option>
+                        <option value="2025-08">Août 2025</option>
+                        <option value="2025-09">Septembre 2025</option>
+                        <option value="2025-10">Octobre 2025</option>
+                        <option value="2025-11">Novembre 2025</option>
+                        <option value="2025-12">Décembre 2025</option>
+                    </select>
+
+                    <label for="bilanDateDay">Jour :</label>
+                    <input type="number" id="bilanDateDay" class="form-control" placeholder="Jour (optionnel)">
+
+                    <label for="bilanDateYear">Année :</label>
+                    <input type="number" id="bilanDateYear" class="form-control" placeholder="Année" value="2025">
+
+                    <button id="genererBilanBtn" class="btn">Générer Bilan</button>
+                </div>
+
+                <div id="bilanResultats" class="table-container">
+                    <h3>Résultats du Bilan</h3>
+                    <p id="bilanTotalQuotient">Total Quotient Familial: 0</p>
+                    <p id="bilanTotalMoisPayes">Total Mois Payés: 0</p>
+                    <p id="bilanTotalMoisImpayes">Total Mois Impayés: 0</p>
+                </div>
+                <button class="btn-print hidden" id="btnPrintBilan">Imprimer le Bilan</button>
+            </section>
+
+            <section id="diagrammesGeneraux" class="hidden">
+                <h2>Diagrammes Généraux</h2>
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <h3>Répartition des Locataires par Ancienneté</h3>
+                        <canvas id="locatairesAncienneteChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Taux d'Occupation des Maisons par Période</h3>
+                        <canvas id="occupationRateChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="performanceFinanciere" class="hidden">
+                <h2>Performance Financière</h2>
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <h3>Évolution des Loyers Percus (Annuel)</h3>
+                        <canvas id="loyersPercusAnnuelChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Comparaison Loyer Attendu vs. Loyer Percu</h3>
+                        <canvas id="loyerComparisonChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
