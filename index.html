@@ -8,6 +8,26 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+
+
+
+    <script>
+//debut ducode
+
+        // Le code de protection est la première chose qui s'exécute
+        const motDePasseCorrect = '00I1';
+        const motDePasseSaisi = prompt('Veuillez entrer le mot de passe :');
+
+        if (motDePasseSaisi !== motDePasseCorrect) {
+            alert('Mot de passe incorrect. Accès refusé.');
+            window.location.href = ''; // Redirection immédiate
+        } else {
+            console.log('Accès autorisé ! Chargement de l\'application...');
+        }
+//fin du code
+
+    </script>
+
     <header>
         <div class="header-left">
             <h1>GaliBusiness Immobilier</h1>
@@ -499,4 +519,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
